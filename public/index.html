@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <title>Directorio Telefónico</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
+    <link rel="stylesheet" type="text/css" href="https://semantic-ui.com/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <style type="text/css">
+      .main-container{
+        padding: 20 20 0 20;
+      }
+      .center-content{
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container" id="app">
+      <h1>Directorio Telefónico</h1>
+      <div class="ui vertical animated button" tabindex="0" @click="showModal">
+        <div class="hidden content">New</div>
+        <div class="visible content">
+          <i class="large plus circle icon"></i>
+        </div>
+      </div>
+      <table class="ui celled striped table">
+        <thead>
+          <tr>
+            <th colspan="6">
+              <h3>{{title}}</h3>
+            </th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>E-mail</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(entry, index) in entries">
+            <td>{{index + 1}}</td>
+            <td>{{entry.name}}</td>
+            <td>{{entry.telephone}}</td>
+            <td>{{entry.mail}}</td>
+            <td class="center-content">
+              <div class="ui vertical animated green button" tabindex="0" @click="showEditModal(index,entry)">
+                <div class="hidden content">Edit</div>
+                <div class="visible content">
+                  <i class="edit icon"></i>
+                </div>
+              </div>
+            </td>
+            <td class="center-content">
+              <div class="ui vertical animated red button" tabindex="0" @click="deleteEntry(index,entry.id)">
+                <div class="hidden content">Delete</div>
+                <div class="visible content">
+                  <i class="trash icon"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="ui modal" id="modal" ref="modalNew">
+        <div class="header">{{modalTitle}}</div>
+        <div class="content">
+          <form class="ui form">
+            <div class="field">
+              <label>Name</label>
+              <input type="text" name="name" placeholder="Name" v-model="entry.name">
+            </div>
+            <div class="field">
+              <label>Phone number</label>
+              <input type="text" name="phone" placeholder="Phone" v-model="entry.telephone">
+            </div>
+            <div class="field">
+              <label>E-mail</label>
+              <input type="text" name="email" placeholder="E-mail" v-model="entry.mail">
+            </div>
+          </form>
+          <div class="ui error message" v-if="errors">
+            <div class="header">Action Forbidden</div>
+            <p>{{errors.name}}: {{errors.message}}</p>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="ui blue button" @click="save">Save</div>
+          <div class="ui cancel button" @click="cleanEntry">Cancel</div>
+        </div>
+      </div>
+    </div>
+    <script src="https://semantic-ui.com/dist/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="http://underscorejs.org/underscore.js"></script>
+    <script src="init.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
