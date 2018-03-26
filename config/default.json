@@ -9,5 +9,29 @@
   "mysql": {
     "client": "mysql2",
     "connection": "mysql://root:@localhost:3306/directorio"
+  },
+  "authentication": {
+    "secret": "fc374cf13b591970f6c1c6e81694b8495394befefb01c1b3defccbccbc574f0b49e27fc006f1dcfbe2fcdd682a147ed1a22bc38e93051ef45b06596bba46032319e5691695a91826274959d33ba04abcc671bc55b1b85b39043967f4ce52b58dfd11367fe49563963b3aa601cabd693f701c50a2412ec97a33faabd3321924d89b492a06c60d9b250508b931cad460505e856cdf7549ffaf451551fed6225cdbc5de1a02cef9c95b43a3e85dc0226c254a64a2e70fef662ffcd50dabcb89459c5cf6dc8030d299450d8cb5cbfbd1503c8991556d4152a6157a50b982d8448a80cbe3221d5e9278b0c1c6becef4085970175d3d57818fed37ce57109818ac2ab0",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
   }
 }

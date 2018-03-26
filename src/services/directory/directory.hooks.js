@@ -1,4 +1,4 @@
-
+const { authenticate } = require('@feathersjs/authentication').hooks;
 
 const preProcessEntries = require('../../hooks/pre-process-entries');
 
@@ -8,7 +8,7 @@ const preProcessPatch = require('../../hooks/pre-process-patch');
 
 module.exports = {
   before: {
-    all: [],
+    all: [ authenticate('jwt') ],
     find: [],
     get: [],
     create: [preProcessEntries()],

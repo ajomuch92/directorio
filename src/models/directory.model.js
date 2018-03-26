@@ -20,8 +20,7 @@ module.exports = function (app) {
         .then(() => console.log(`Created ${tableName} table`))
         .catch(e => console.error(`Error creating ${tableName} table`, e));
     }
-  });
-  
+  });  
 
   return db;
 };

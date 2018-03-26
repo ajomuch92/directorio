@@ -6,14 +6,20 @@ var vm = new Vue({
     	entries: {},
     	entry: {},
     	errors: undefined,
+    	loginError: undefined,
+    	user: {},
     	action: '',
     	title: '',
     	modalTitle: '',
-    	index: -1
+    	index: -1,
+    	isAuth: false
     }
   },
   mounted: function(){
-  	this.init();
+  	this.user = {
+  		email: '',
+  		password: ''
+  	}
   },
   methods:{
   	init: async function() {
@@ -78,6 +84,30 @@ var vm = new Vue({
   		this.errors = undefined;
   		this.index = -1;
   		this.action = '';
+  	},
+  	authenticate: async function(){
+  		try{
+	  		await feathersApp.authenticate({
+				  strategy: 'local',
+				  email: this.user.email,
+				  password: this.user.password
+				});
+				this.isAuth = true;
+				this.loginError = {};
+				this.init();
+	  	} catch(error){
+	  		console.log(error);
+	  		this.loginError = error;
+	  		this.isAuth = false;
+	  	}
+  	},
+  	logout: async function(){
+  		await feathersApp.logout();
+  		this.isAuth = false;
+  		this.user = {
+	  		email: '',
+	  		password: ''
+	  	}
   	}
   }
 });
